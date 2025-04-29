@@ -2,6 +2,8 @@
 
 #include "Core.h"
 #include "Window.h"
+
+#include "Currsor/LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
 namespace Currsor
@@ -14,16 +16,22 @@ namespace Currsor
     public:
         Application();
         virtual ~Application();
+        void Run();
         void OnEvent(Event& e);
+
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* layer);
 
         Application* CreateApplication(int argc, char** argv);
 
-        void Run();
-        bool OnWindowClose(WindowCloseEvent& e);
 
     private:
+        
+        bool OnWindowClose(WindowCloseEvent& e);
+        
         std::unique_ptr<Window> m_Window;
         bool m_Running = true;
+        LayerStack m_LayerStack;
     };
     
 }

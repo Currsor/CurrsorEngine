@@ -6,9 +6,6 @@
 
 namespace Currsor
 {
-    // 显式实例化并导出 shared_ptr<spdlog::logger>
-    template class CURRSOR_API std::shared_ptr<spdlog::logger>;
-    
     class CURRSOR_API Log
     {
     public:
