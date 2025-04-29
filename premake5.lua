@@ -15,6 +15,7 @@ workspace "CurrsorEngine"
     -- 包含相对于根文件夹的目录（解决方案目录）
     include "Currsor/vendor/GLFW"
     include "Currsor/vendor/Glad"
+    include "Currsor/vendor/imgui"
 
     project "Currsor"
         location "Currsor"
@@ -42,12 +43,14 @@ workspace "CurrsorEngine"
             "%{prj.name}/vendor/spdlog/include",
             "%{prj.name}/vendor/GLFW/include",
             "%{prj.name}/vendor/Glad/include",
+            "%{prj.name}/vendor/imgui",
         }
 
         links
         {
             "GLFW",
             "Glad",
+            "ImGui",
             "opengl32.lib"
         }
 

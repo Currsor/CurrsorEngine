@@ -5,6 +5,8 @@
 #include "./Currsor/Layer.h"
 #include "./Currsor/Log.h"
 
+#include "Currsor/Imgui/ImguiLayer.h"
+
 // ----- Entry Point -----  
 #include "./Currsor/EntryPoint.h"
 // -----------------------

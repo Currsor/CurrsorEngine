@@ -10,3 +10,6 @@
 [submodule "Currsor/vendor/spblog"]
 	path = Currsor/vendor/spblog
 	url = https://github.com/gabime/spdlog
+[submodule "Currsor/vendor/imgui"]
+	path = Currsor/vendor/imgui
+	url = https://github.com/TheCherno/imgui

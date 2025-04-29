@@ -15,7 +15,7 @@ public:
  
     void OnEvent(Currsor::Event& event) override
     {
-        LOG_INFO("{0}", event.ToString());
+        // LOG_INFO("{0}", event.ToString());
     }
  
 };
@@ -26,6 +26,7 @@ public:
     Sandbox()
     {
         PushLayer(new ExampleLayer());
+        PushOverlay(new Currsor::ImGuiLayer());
     }
     ~Sandbox() override
     {
