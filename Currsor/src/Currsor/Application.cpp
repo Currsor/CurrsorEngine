@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "Application.h"
-#include "GLFW/glfw3.h"
+
+#include <glad/glad.h>
 
 #include "Events/ApplicationEvent.h"
 

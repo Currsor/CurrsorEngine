@@ -59,7 +59,8 @@ workspace "CurrsorEngine"
             defines
             {
                 "CS_PLATFORM_WINDOWS",
-                "CS_BUILD_DLL"
+                "CS_BUILD_DLL",
+                "GLFW_INCLUDE_NONE"
             }
         
         postbuildcommands

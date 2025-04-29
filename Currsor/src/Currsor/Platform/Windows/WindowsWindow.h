@@ -1,9 +1,8 @@
 #pragma once
- 
-#include "PCH.h"
 
 #include "Currsor/Window.h"
-#include "GLFW/glfw3.h"
+
+#include <GLFW/glfw3.h>
 
 namespace Currsor {
  

@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "WindowsWindow.h"
 
+#include <glad/glad.h>
+
 #include "Currsor/Events/ApplicationEvent.h"
 #include "Currsor/Events/MouseEvent.h"
 #include "Currsor/Events/KeyEvent.h"
@@ -49,6 +51,10 @@ namespace Currsor {
  
         m_Window = glfwCreateWindow(static_cast<int>(props.Width), static_cast<int>(props.Height), m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+
+		int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+    	LOG_CORE_ASSERT(status, "无法初始化 GLAD!");
+    	
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
