@@ -1,0 +1,12 @@
+[submodule "Currsor/vendor/spdlog"]
+	path = Currsor/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Currsor/vendor/GLFW"]
+	path = Currsor/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
+[submodule "Currsor/vender/spdlog"]
+	path = Currsor/vender/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Currsor/vendor/spblog"]
+	path = Currsor/vendor/spblog
+	url = https://github.com/gabime/spdlog
