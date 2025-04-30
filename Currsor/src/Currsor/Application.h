@@ -28,9 +28,9 @@ namespace Currsor
         
         Application* CreateApplication(int argc, char** argv);
 
+        bool OnWindowClose(); 
 
     private:
-        bool OnWindowClose(WindowCloseEvent& e);
         
         std::unique_ptr<Window> m_Window;
         bool m_Running = true;

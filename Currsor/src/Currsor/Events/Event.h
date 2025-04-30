@@ -9,7 +9,7 @@ namespace Currsor
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved, //窗口的五种操作，0x001,0x010,0x011,0x100,0x
         AppTick, AppUpdate, AppRender,                                        //APP的操作，暂时先不计较这个
-        KeyPressed, KeyReleased,                                              //键盘的两种操作
+        KeyPressed, KeyReleased, KeyTyped,                                    //键盘的两种操作
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled    //鼠标的四种操作
     };
 

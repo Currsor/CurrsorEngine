@@ -3,7 +3,9 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
 #include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
 
 namespace Currsor
 {
@@ -24,7 +26,8 @@ namespace Currsor
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN_ONE(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        if (Input::IsKeyPressed(256) && Input::IsKeyPressed(340)) OnWindowClose();
         
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {
@@ -60,7 +63,7 @@ namespace Currsor
         }
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent& e)
+    bool Application::OnWindowClose()
     {
         m_Running = false;
         return true;

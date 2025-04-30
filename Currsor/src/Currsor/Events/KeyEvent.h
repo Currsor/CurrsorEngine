@@ -3,20 +3,21 @@
 #include "PCH.h"
 
 #include "Event.h"
+#include "../Core/KeyCodes.h"
 
 namespace Currsor
 {
     class CURRSOR_API KeyEvent : public Event
     {
     public:
-        inline int GetKeyCode() const { return m_KeyCode; }
+        KeyCode GetKeyCode() const { return m_KeyCode; }
 
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
     protected:
         KeyEvent(int keycode)
             : m_KeyCode(keycode) {}
 
-        int m_KeyCode;
+        KeyCode m_KeyCode;
     };
 
     class CURRSOR_API KeyPressedEvent : public KeyEvent
@@ -51,5 +52,20 @@ namespace Currsor
         }
  
         EVENT_CLASS_TYPE(KeyReleased)
+    };
+
+    class CURRSOR_API KeyTypedEvent : public KeyEvent
+    {
+    public:
+        KeyTypedEvent(int keycode)
+            : KeyEvent(keycode) {}
+ 
+        std::string ToString() const override
+        {
+            std::string a = "KeyTypedEvent: " + std::to_string(GetKeyCode());
+            return a;
+        }
+ 
+        EVENT_CLASS_TYPE(KeyTyped)
     };
 }

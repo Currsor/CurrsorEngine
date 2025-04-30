@@ -17,7 +17,6 @@ public:
     {
         // LOG_INFO("{0}", event.ToString());
     }
- 
 };
 
 class Sandbox : public Currsor::Application

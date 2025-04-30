@@ -1,4 +1,5 @@
 workspace "CurrsorEngine"
+    startproject "Sandbox"
     architecture "x64"
 
     buildoptions { "/utf-8" }
@@ -11,16 +12,19 @@ workspace "CurrsorEngine"
     }
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-    
-    -- 包含相对于根文件夹的目录（解决方案目录）
-    include "Currsor/vendor/GLFW"
-    include "Currsor/vendor/Glad"
-    include "Currsor/vendor/imgui"
+
+    group "Dependencies"
+        include "Currsor/vendor/GLFW"
+        include "Currsor/vendor/Glad"
+        include "Currsor/vendor/imgui"
+
+    group ""
 
     project "Currsor"
         location "Currsor"
         kind "SharedLib"
         language "C++"
+        staticruntime "off"
 
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -56,7 +60,6 @@ workspace "CurrsorEngine"
 
         filter "system:windows"
             cppdialect "C++17"
-            staticruntime "On"
             systemversion "latest"
 
             defines
@@ -68,28 +71,29 @@ workspace "CurrsorEngine"
         
         postbuildcommands
         {
-            "{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"
+            "{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox\""
         }
         
         filter "configurations:Debug"
             defines { "CS_DEBUG" }
-            buildoptions { "/MDd" }
+            runtime "Debug"
             symbols "On"
 
         filter "configurations:Release"
             defines { "CS_RELEASE" }
-            buildoptions { "/MD" }
+            runtime "Release"
             optimize "On"
 
         filter "configurations:Dist"    
             defines { "CS_DIST" }
-            buildoptions { "/MD" }
+            runtime "Release"
             optimize "On"
 
     project "Sandbox"
         location "Sandbox"
         kind "ConsoleApp"
         language "C++"
+        staticruntime "off"
         
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -111,7 +115,6 @@ workspace "CurrsorEngine"
         
         filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
         
         defines
@@ -126,12 +129,12 @@ workspace "CurrsorEngine"
         
         filter "configurations:Debug"
         defines { "CS_DEBUG" }
-        buildoptions { "/MDd" }
+        runtime "Debug"
         
         filter "configurations:Release"
         defines { "CS_RELEASE" }
-        buildoptions { "/MD" }
+        runtime "Release"
         
         filter "configurations:Dist"
         defines { "CS_DIST" } 
-        buildoptions { "/MD" }
+        runtime "Release"

@@ -2,8 +2,8 @@
 #include "ImGuiLayer.h"
 #include "imgui.h"
 #include "Currsor/Application.h"
-#include "Currsor/Events/MouseEvent.h"
 #include "Currsor/Platform/OpenGL/ImGuiOpenGLRenderer.h"
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Currsor
@@ -26,6 +26,7 @@ namespace Currsor
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
 		// TEMPORARY: should eventually use Hazel key codes
+		memset(io.KeyMap, -1, sizeof(io.KeyMap));
 		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
 		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
 		io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
@@ -61,9 +62,15 @@ namespace Currsor
 	void ImGuiLayer::OnEvent(Event &e)
 	{
 		EventDispatcher dispatcher(e);
+
 		dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnMouseCursorMoved));
 		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnMouseButtonPressed));
 		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnMouseButtonReleased));
+		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnMouseScrolled));
+		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnKeyPressedEvent));
+		dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnKeyReleasedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnKeyTypedEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN_ONE(ImGuiLayer::OnWindowResizeEvent));
 	}
 
 	void ImGuiLayer::OnUpdate()
@@ -78,12 +85,13 @@ namespace Currsor
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-		float time = (float)glfwGetTime();
+		float time = static_cast<float>(glfwGetTime());
 		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
+	
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
@@ -110,6 +118,59 @@ namespace Currsor
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDown[e.GetMouseButton()] = false;
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseScrolled(MouseScrolledEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheel += e.GetYOffset();
+		io.MouseWheelH += e.GetXOffset();
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = true;
+
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		return false;
+	}
+ 
+	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = false;
+
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+ 
+		return false;
+	}
+ 
+	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		int keycode = e.GetKeyCode();
+		if (keycode > 0 && keycode < 0x10000)
+			io.AddInputCharacter((unsigned short)keycode);
+ 
+		return false;
+	}
+ 
+	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+ 
 		return false;
 	}
 }
