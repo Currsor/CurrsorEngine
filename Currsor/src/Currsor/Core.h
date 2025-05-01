@@ -2,9 +2,9 @@
 
 #ifdef CS_PLATFORM_WINDOWS
     #ifdef CS_BUILD_DLL
-        #define CURRSOR_API __declspec(dllexport)
+        #define CURRSOR_API //__declspec(dllexport) //改为lib，不必导出dll
     #else
-        #define CURRSOR_API __declspec(dllimport)
+        #define CURRSOR_API //__declspec(dllimport)
     #endif
 #else
     #error Currsor only supports Windows!
