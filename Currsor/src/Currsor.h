@@ -8,6 +8,7 @@
 #include "./Currsor/Core/KeyCodes.h"
 #include "./Currsor/Core/MouseCodes.h"
 
+#include "imgui/imgui.h"
 #include "Currsor/Imgui/ImguiLayer.h"
 
 // ----- Entry Point -----  

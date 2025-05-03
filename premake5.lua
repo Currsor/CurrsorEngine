@@ -2,7 +2,10 @@ workspace "CurrsorEngine"
     startproject "Sandbox"
     architecture "x64"
 
-    buildoptions { "/utf-8" }
+    buildoptions 
+    {
+        "/utf-8",
+    }
 
     configurations
     {
@@ -115,6 +118,7 @@ workspace "CurrsorEngine"
         {
             "Currsor/vendor/spdlog/include",
             "Currsor/vendor/glm",
+            "Currsor/vendor",
             "Currsor/src",
         }
         

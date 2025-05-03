@@ -6,6 +6,8 @@
 #include "Currsor/LayerStack.h"
 #include "Events/ApplicationEvent.h"
 
+#include "Currsor/Imgui/ImguiLayer.h"
+
 namespace Currsor
 {
     // 显式实例化并导出
@@ -33,6 +35,7 @@ namespace Currsor
     private:
         
         std::unique_ptr<Window> m_Window;
+        ImGuiLayer* m_ImGuiLayer;
         bool m_Running = true;
         LayerStack m_LayerStack;
         static Application* s_Instance;
