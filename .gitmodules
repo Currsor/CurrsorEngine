@@ -13,3 +13,6 @@
 [submodule "Currsor/vendor/imgui"]
 	path = Currsor/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+[submodule "Currsor/vendor/glm"]
+	path = Currsor/vendor/glm
+	url = https://github.com/g-truc/glm

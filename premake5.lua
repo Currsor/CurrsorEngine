@@ -38,7 +38,9 @@ workspace "CurrsorEngine"
             "%{prj.name}/src/**.cpp",
             "%{prj.name}/src/**.hpp",
             "%{prj.name}/src/**.c",
-            "%{prj.name}/src/**.cc"
+            "%{prj.name}/src/**.cc",
+            "%{prj.name}/vendor/glm/glm/**.hpp",
+            "%{prj.name}/vendor/glm/glm/**.inl",
         }
 
         includedirs
@@ -48,6 +50,7 @@ workspace "CurrsorEngine"
             "%{prj.name}/vendor/GLFW/include",
             "%{prj.name}/vendor/Glad/include",
             "%{prj.name}/vendor/imgui",
+            "%{prj.name}/vendor/glm",
         }
 
         links
@@ -111,6 +114,7 @@ workspace "CurrsorEngine"
         includedirs
         {
             "Currsor/vendor/spdlog/include",
+            "Currsor/vendor/glm",
             "Currsor/src",
         }
         
